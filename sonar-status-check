@@ -1,13 +1,28 @@
 node{
-   stage('SCM Checkout'){
+   stage('Clone the git'){
      git 'https://github.com/Noufel6694/Demo.git'
    }
    
    
    stage('SonarQube Analysis') {
-        
+        def scannerHome=tool 'sonarqube';
         withSonarQubeEnv('sonar') { 
+        sh "${scannerHome}/bin/sonar-scanner \
+        -D sonar.login=admin \
+        -D sonar.password=user \
+        -D sonar.projectKey=Sonarqube-test \
+        -D sonar.exclusions=vendor/**,resources/**,**/*.java \
+        -D sonar.host.url=Sonarqube-http://localhost:9000/" \
+        
           echo "Hello World!"
+        }
+    }
+    stage('Quality Gates') {
+         timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        }
         }
     }
    
