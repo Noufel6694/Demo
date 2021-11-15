@@ -16,7 +16,7 @@ node{
         
           echo "Hello World!"
         }
-    }
+    
    
    
    stage('Email Notification'){
