@@ -5,14 +5,14 @@ node{
    
    
    stage('SonarQube Analysis') {
-        def scannerHome=tool 'Sonarqube-test';
-        withSonarQubeEnv('sonar') { 
-        sh "${scannerHome}/bin/sonar-scanner \
-        -D sonar.login=admin \
-        -D sonar.password=user \
-        -D sonar.projectKey=Sonarqube-test \
-        -D sonar.exclusions=vendor/**,resources/**,**/*.java \
-        -D sonar.host.url=Sonarqube-http://localhost:9000/" \
+       // def scannerHome=tool 'Sonarqube-test';
+       // withSonarQubeEnv('sonar') { 
+        //sh "${scannerHome}/bin/sonar-scanner \
+        //-D sonar.login=admin \
+        //-D sonar.password=user \
+        //-D sonar.projectKey=Sonarqube-test \
+        //-D sonar.exclusions=vendor/**,resources/**,**/*.java \
+       // -D sonar.host.url=Sonarqube-http://localhost:9000/" \
         
           echo "Hello World!"
         }
