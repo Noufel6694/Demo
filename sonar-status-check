@@ -7,14 +7,14 @@ node{
    stage('SonarQube Analysis') {
         
         withSonarQubeEnv('sonar') { 
-          sh "${mvnHome}/bin/mvn sonar:sonar"
+          echo "Hello World!"
         }
     }
    
    stage('Email Notification'){
       mail bcc: '', body: '''Hi Welcome to jenkins email alerts
       Thanks
-      Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'noufelferesh@gmail.com'
+      Noufel''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'noufelferesh@gmail.com'
    }
    
 
