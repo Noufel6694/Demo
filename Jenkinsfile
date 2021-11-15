@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
-            steps {
-                echo 'building the application...'
+       stage("Git Checkout"){
+            steps{
+                git credentialsId: 'github', url: 'https://github.com/Noufel6694/Demo.git'
             } 
             }
           stage('test') {
