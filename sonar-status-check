@@ -5,6 +5,7 @@ node{
    
    
    stage('SonarQube Analysis') {
+   git credentialsId: 'Github_cred', url: 'https://github.com/Noufel6694/Demo.git'
        // def scannerHome=tool 'Sonarqube-test';
        // withSonarQubeEnv('sonar') { 
         //sh "${scannerHome}/bin/sonar-scanner \
