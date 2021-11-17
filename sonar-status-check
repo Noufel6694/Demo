@@ -3,9 +3,16 @@ node{
      git 'https://github.com/Noufel6694/Demo.git'
    }
    
-   
-   stage('SonarQube Analysis') {
-   git credentialsId: 'Github_cred', url: 'https://github.com/Noufel6694/Demo.git'
+   stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+   //stage('SonarQube Analysis') {
+   //git credentialsId: 'Github_cred', url: 'https://github.com/Noufel6694/Demo.git'
        // def scannerHome=tool 'Sonarqube-test';
        // withSonarQubeEnv('sonar') { 
         //sh "${scannerHome}/bin/sonar-scanner \
@@ -15,20 +22,30 @@ node{
         //-D sonar.exclusions=vendor/**,resources/**,**/*.java \
        // -D sonar.host.url=Sonarqube-http://localhost:9000/" \
         
-          echo "Hello World!"
-        }
+         // echo "Hello World!"
+        
     
-    stage('Quality Gates') {
+    //stage('Quality Gates') {
     
-         timeout(time: 1, unit: 'HOURS') {
-  def qg = waitForQualityGate(){
-              if (qg.status != 'OK') {
-            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-        }
-        }
-        }
-    }
+         //timeout(time: 1, unit: 'HOURS') {
+ // def qg = waitForQualityGate(){
+             // if (qg.status != 'OK') {
+            //error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        //}
+       // }
+        //}
+   // }
     
+    stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+                }
+                }
+                }
+                
+                
+                
    stage('Email Notification'){
       mail bcc: '', body: '''Hi Welcome to jenkins email alerts
       Thanks
